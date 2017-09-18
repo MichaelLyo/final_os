@@ -137,6 +137,8 @@ PUBLIC void addTwoString(char *to_str,char *from_str1,char *from_str2){
     to_str[j]=0;
 }
 
+ 
+
 void displayWelcomeInfo(){
     printf("=============================================================================\n");
     printf("                                      L O S             \n");
@@ -174,7 +176,8 @@ void shell(char *tty_name){
            displayWelcomeInfo();
            printf("\n               You may type 'help' to get more information.\n");
     }
-   	
+       
+ 
 
    char current_dirr[512] = "/";
    
@@ -194,7 +197,7 @@ void shell(char *tty_name){
         if (strcmp(rdbuf, "") == 0)
             continue;
 
-        //解析命令
+        //以空格为分界，解析提取命令
         int i = 0;
         int j = 0;
         while(rdbuf[i] != ' ' && rdbuf[i] != 0)
@@ -425,6 +428,9 @@ void shell(char *tty_name){
         }
         else if (strcmp(cmd, "game") == 0){
         	game(fd_stdin);
+        }
+        else if (strcmp(cmd, "calculator") == 0){
+        	calculator();
         }
         else if (strcmp(cmd, "mkdir") == 0){
             i = j =0;
