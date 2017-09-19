@@ -171,9 +171,6 @@ lib/syslog.o: lib/syslog.c
 applications/print.o: applications/print.c
 	$(CC) $(CFLAGS) -o $@ $<
 
-# applications/2048.o: applications/2048.c
-# 	$(CC) $(CFLAGS) -o $@ $<
-
 applications/calculator.o: applications/calculator.c
 	$(CC) $(CFLAGS) -o $@ $<
 

@@ -166,19 +166,20 @@ void shell(char *tty_name){
     int fd_stdout = open(tty_name, O_RDWR);
     assert(fd_stdout == 1);
 
-    //animation();
+    animation();
     clear();
     //animation_l();
-    
+    displayWelcomeInfo();
+    printf("\n               You may type 'help' to get more information.\n");
     
    
-    if(strcmp(tty_name, "/dev_tty0")==0){
-           displayWelcomeInfo();
-           printf("\n               You may type 'help' to get more information.\n");
-    }
+    // if(strcmp(tty_name, "/dev_tty0")==0){
+    //        displayWelcomeInfo();
+    //        printf("\n               You may type 'help' to get more information.\n");
+    // }
        
  
-
+   //testRow();
    char current_dirr[512] = "/";
    
     while (1) {  
@@ -256,7 +257,7 @@ void shell(char *tty_name){
             printf("File created: %s (fd %d)\n", arg1, fd);
             close(fd);
         }
-        else if (strcmp(cmd, "cat") == 0)
+        else if (strcmp(cmd, "view") == 0)
         {
             if(arg1[0]!='/'){
                 addTwoString(temp,current_dirr,arg1);
@@ -278,7 +279,7 @@ void shell(char *tty_name){
             close(fd);
             printf("%s\n", buf);
         }
-        else if (strcmp(cmd, "vi") == 0)
+        else if (strcmp(cmd, "modify") == 0)
         {
             if(arg1[0]!='/'){
                 addTwoString(temp,current_dirr,arg1);
@@ -426,11 +427,19 @@ void shell(char *tty_name){
         {
             doTest(arg1);
         }
-        else if (strcmp(cmd, "game") == 0){
-        	game(fd_stdin);
+        
+        else if (strcmp(cmd, "animation") == 0){
+            animation();
+            displayWelcomeInfo();
         }
         else if (strcmp(cmd, "calculator") == 0){
         	calculator();
+        }
+        else if (strcmp(cmd, "clearMine") == 0){
+        	game(fd_stdin);
+        }
+        else if (strcmp(cmd, "print") == 0){
+        	myPrint(arg1);
         }
         else if (strcmp(cmd, "mkdir") == 0){
             i = j =0;
@@ -481,6 +490,14 @@ void shell(char *tty_name){
         else
             printf("Command not found, please check!\n");
             
+    }
+}
+
+void testRow()
+{
+    for(int i =0;i<30;i++)
+    {
+        printf("%d\n",i);
     }
 }
 
@@ -693,20 +710,17 @@ void help()
 {
     printf("=============================help information==================================\n");
     printf("***********  Commands  ***********|***************  description  *************\n");
-    printf("1.  help                          : Show this help message\n");
-    printf("2.  clear                         : Clear the screen\n");
-    printf("3.  process                       : A process manage, show you all process-info\n");
-    printf("4.  ls                            : List files in current directory\n");
-    printf("5.  create      [file]            : Create a new file\n");
-    printf("6.  cat         [file]            : Print the file\n");
-    printf("7.  vi          [file]            : Modify the content of the file\n");
-    printf("8.  delete      [file]            : Delete a file\n");
-    printf("9.  cp          [SOURCE] [DEST]   : Copy a file\n");
-    printf("10. mv          [SOURCE] [DEST]   : Move a file\n");   
-    printf("11. encrypt     [file]            : Encrypt a file\n");
-    printf("12. cd          [pathname]        : Change the directory\n");
-    printf("13. mkdir       [directory name]  : Create a new directory in current directory\n");
-    printf("14. game                          : The Minesweeper Game\n");
+    printf("    help                          : Show this help message\n");
+    printf("    clear                         : Clear the screen\n");
+    printf("    process                       : A process manage, show you all process-info\n");
+    printf("    ls                            : List files in current directory\n");
+    printf("    create      [filename]        : Create a new file\n");
+    printf("    view        [filename]        : Print the file\n");
+    printf("    modify      [filename]        : Modify the content of the file\n");
+    printf("    delete      [filename]        : Delete a file\n");
+    printf("    clearMine                     : Play a mine clearance Game\n");
+    printf("    calculator                    : Run a calculator\n");
+    printf("    print       [content]         : Print the information given\n");
     printf("==============================================================================\n");
 }
 
@@ -874,6 +888,10 @@ void game(int fd_stdin){
 
 			clearArr(keys, 128);
             int r = read(fd_stdin, keys, 128);
+            // if (keys[0]=='q'){
+            //     break;
+            // }
+            // else 
             if(keys[0]>'9'||keys[0]<'0'||keys[1]!=' '||keys[2]>'9'||keys[2]<'0'||keys[3]!=0){
             	printf("Please input again!\n");
 				continue;

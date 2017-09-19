@@ -10,24 +10,24 @@
 #include "global.h"
 #include "proto.h"
 
+
 int calculator()
 {
 	int i, num1 = 0, num2 = 0, flag = 1, res = 0;
 	char bufr[128];
 	printf("***************************************************\n");
-	printf("*               My Calculator                     *\n");
+	printf("*               Simple Calculator                     *\n");
 	printf("***************************************************\n");
-	printf("*  1. Only two pararmeters                        *\n");
-	printf("*  2. Only for integer                            *\n");
-	printf("*  3. Enter q to quit                             *\n");
+	printf("*   Only for two int pararmeters,  q to quit      *\n");
 	printf("***************************************************\n\n");
 	while(flag == 1){	
 		printf("Please input num1:");
 		i = read(0, bufr, 128);
 		if (bufr[0] == 'q')
 			break;
-		printf("num1 former:%s",bufr);
+		
 		num1 = getNum(bufr);
+		
 		printf("num1: %d\n", num1);
 		printf("Please input num2:");
 		i = read(0, bufr, 128);	
@@ -49,6 +49,7 @@ int calculator()
 				break;
 			case '*':
 				res = num1 * num2;
+				printf("%d * %d = %d\n", num1, num2, res);
 				break;
 			case '/':
 				if(num2 <= 0)
@@ -73,12 +74,25 @@ int getNum(char * bufr)
 	int ten = 1, i = 0, res = 0;
 	for (i = 0; i < strlen(bufr) - 1; i++)
 	{
-		ten *= 10;
+		int num = bufr[i] - '0';
+		if(num>=0&num<=9)
+		{
+			ten *= 10;
+		}
+		else
+		 break;
 	}
+	ten /= 10;
 	for (i = 0; i < strlen(bufr); i++)
 	{
-		res += (bufr[i] - '0') * ten;
-		ten /= 10;
+		int num = bufr[i] - '0';
+		if(num>=0&num<=9)
+		{
+			res += (num) * ten;
+			ten /= 10;
+		}
+		else
+			break;
 	}
 	return res;
 }
