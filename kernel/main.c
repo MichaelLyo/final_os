@@ -441,6 +441,9 @@ void shell(char *tty_name){
         else if (strcmp(cmd, "print") == 0){
         	myPrint(arg1);
         }
+        else if (strcmp(cmd, "welcome") == 0){
+        	displayWelcomeInfo();
+        }
         else if (strcmp(cmd, "mkdir") == 0){
             i = j =0;
             while(current_dirr[i]!=0){
@@ -711,6 +714,7 @@ void help()
     printf("=============================help information==================================\n");
     printf("***********  Commands  ***********|***************  description  *************\n");
     printf("    help                          : Show this help message\n");
+    printf("    welcome                       : Print welcome information\n");
     printf("    clear                         : Clear the screen\n");
     printf("    process                       : A process manage, show you all process-info\n");
     printf("    ls                            : List files in current directory\n");
